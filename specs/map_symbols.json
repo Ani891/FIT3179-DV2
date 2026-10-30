@@ -1,0 +1,185 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Proportional symbol map: registered recreational vehicles by state, January 2024, with state codes.",
+  "height": 340,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -134,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e3d5bd",
+        "stroke": "#faf3e6"
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_stats.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "nights_millions": "number",
+            "rv_registered_jan2024": "number",
+            "avg_nights": "number",
+            "lat": "number",
+            "lon": "number",
+            "nights_class": "number",
+            "stay_class": "number"
+          }
+        }
+      },
+      "mark": {
+        "type": "circle",
+        "color": "#d9a441",
+        "opacity": 0.85
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "rv_registered_jan2024",
+          "type": "quantitative",
+          "scale": {
+            "range": [
+              60,
+              3500
+            ]
+          },
+          "legend": {
+            "title": "Registered RVs",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "rv_registered_jan2024",
+            "title": "Registered RVs",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_stats.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "nights_millions": "number",
+            "rv_registered_jan2024": "number",
+            "avg_nights": "number",
+            "lat": "number",
+            "lon": "number",
+            "nights_class": "number",
+            "stay_class": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.abbr != 'ACT'"
+        },
+        {
+          "filter": "datum.rv_registered_jan2024 > 100000"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "Oswald",
+        "fontSize": 13,
+        "dy": 0
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "abbr"
+        },
+        "color": {
+          "value": "#3b2a1d"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_stats.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "nights_millions": "number",
+            "rv_registered_jan2024": "number",
+            "avg_nights": "number",
+            "lat": "number",
+            "lon": "number",
+            "nights_class": "number",
+            "stay_class": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.abbr != 'ACT'"
+        },
+        {
+          "filter": "datum.rv_registered_jan2024 <= 100000"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "Oswald",
+        "fontSize": 13,
+        "dy": -20
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "abbr"
+        },
+        "color": {
+          "value": "#3b2a1d"
+        }
+      }
+    }
+  ]
+}

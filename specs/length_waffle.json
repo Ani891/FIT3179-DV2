@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Waffle chart (small multiples): 100 trips and 100 nights, each square coloured by trip length, 2024.",
+  "data": {
+    "url": "data/waffle_length.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "square": "number"
+      }
+    }
+  },
+  "facet": {
+    "column": {
+      "field": "group",
+      "type": "nominal",
+      "sort": [
+        "100 trips",
+        "100 nights"
+      ],
+      "title": null,
+      "header": {
+        "labelFont": "Oswald",
+        "labelFontSize": 14,
+        "labelOrient": "top"
+      }
+    }
+  },
+  "spec": {
+    "width": 190,
+    "height": 190,
+    "transform": [
+      {
+        "calculate": "datum.square % 10",
+        "as": "col"
+      },
+      {
+        "calculate": "floor(datum.square / 10)",
+        "as": "row"
+      }
+    ],
+    "mark": "rect",
+    "encoding": {
+      "x": {
+        "field": "col",
+        "type": "ordinal",
+        "axis": null,
+        "scale": {
+          "paddingInner": 0.12
+        }
+      },
+      "y": {
+        "field": "row",
+        "type": "ordinal",
+        "axis": null,
+        "scale": {
+          "paddingInner": 0.12
+        }
+      },
+      "color": {
+        "field": "length",
+        "type": "nominal",
+        "title": "Trip length (short to long)",
+        "scale": {
+          "domain": [
+            "1 night",
+            "2 to 3 nights",
+            "4 to 7 nights",
+            "8 to 14 nights",
+            "15 nights or more",
+            "Rounding"
+          ],
+          "range": [
+            "#d6e4f0",
+            "#a8c7e3",
+            "#6ea1cf",
+            "#3a76ad",
+            "#17406b",
+            "#e3d5bd"
+          ]
+        },
+        "legend": {
+          "orient": "top",
+          "columns": 2,
+          "symbolType": "square",
+          "labelLimit": 400,
+          "titleLimit": 400
+        }
+      },
+      "tooltip": [
+        {
+          "field": "group",
+          "title": "Grid"
+        },
+        {
+          "field": "length",
+          "title": "Trip length"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,311 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bivariate choropleth: state colour shows both caravan and camping nights (rust) and average nights per trip (green), 2024. A 3 by 3 key sits in the bottom-left corner.",
+  "height": 340,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -134,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "data/state_stats.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "nights_millions": "number",
+                  "rv_registered_jan2024": "number",
+                  "avg_nights": "number",
+                  "lat": "number",
+                  "lon": "number",
+                  "nights_class": "number",
+                  "stay_class": "number"
+                }
+              }
+            },
+            "key": "state",
+            "fields": [
+              "bivar_key",
+              "nights_millions",
+              "avg_nights"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#faf3e6"
+      },
+      "encoding": {
+        "color": {
+          "field": "bivar_key",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "n1s1",
+              "n2s1",
+              "n3s1",
+              "n1s2",
+              "n2s2",
+              "n3s2",
+              "n1s3",
+              "n2s3",
+              "n3s3"
+            ],
+            "range": [
+              "#e8e8e8",
+              "#b8d6be",
+              "#73ae80",
+              "#b5c0da",
+              "#90b2b3",
+              "#5a9178",
+              "#6c83b5",
+              "#567994",
+              "#2a5a5b"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "properties.name",
+            "title": "State"
+          },
+          {
+            "field": "nights_millions",
+            "title": "Nights (millions)"
+          },
+          {
+            "field": "avg_nights",
+            "title": "Nights per trip"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_stats.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "nights_millions": "number",
+            "rv_registered_jan2024": "number",
+            "avg_nights": "number",
+            "lat": "number",
+            "lon": "number",
+            "nights_class": "number",
+            "stay_class": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.abbr != 'ACT'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "Oswald",
+        "fontSize": 13,
+        "dy": 0
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "abbr"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.bivar_key == 'n3s3' || datum.bivar_key == 'n1s3' || datum.bivar_key == 'n3s2'",
+            "value": "#fff6e6"
+          },
+          "value": "#3b2a1d"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "k": "n1s1",
+            "x0": 6,
+            "x1": 28,
+            "y0": 310,
+            "y1": 332
+          },
+          {
+            "k": "n1s2",
+            "x0": 6,
+            "x1": 28,
+            "y0": 286,
+            "y1": 308
+          },
+          {
+            "k": "n1s3",
+            "x0": 6,
+            "x1": 28,
+            "y0": 262,
+            "y1": 284
+          },
+          {
+            "k": "n2s1",
+            "x0": 30,
+            "x1": 52,
+            "y0": 310,
+            "y1": 332
+          },
+          {
+            "k": "n2s2",
+            "x0": 30,
+            "x1": 52,
+            "y0": 286,
+            "y1": 308
+          },
+          {
+            "k": "n2s3",
+            "x0": 30,
+            "x1": 52,
+            "y0": 262,
+            "y1": 284
+          },
+          {
+            "k": "n3s1",
+            "x0": 54,
+            "x1": 76,
+            "y0": 310,
+            "y1": 332
+          },
+          {
+            "k": "n3s2",
+            "x0": 54,
+            "x1": 76,
+            "y0": 286,
+            "y1": 308
+          },
+          {
+            "k": "n3s3",
+            "x0": 54,
+            "x1": 76,
+            "y0": 262,
+            "y1": 284
+          }
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "stroke": "#faf3e6"
+      },
+      "encoding": {
+        "x": {
+          "field": "x0",
+          "type": "quantitative",
+          "scale": null
+        },
+        "x2": {
+          "field": "x1"
+        },
+        "y": {
+          "field": "y0",
+          "type": "quantitative",
+          "scale": null
+        },
+        "y2": {
+          "field": "y1"
+        },
+        "color": {
+          "field": "k",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "n1s1",
+              "n2s1",
+              "n3s1",
+              "n1s2",
+              "n2s2",
+              "n3s2",
+              "n1s3",
+              "n2s3",
+              "n3s3"
+            ],
+            "range": [
+              "#e8e8e8",
+              "#b8d6be",
+              "#73ae80",
+              "#b5c0da",
+              "#90b2b3",
+              "#5a9178",
+              "#6c83b5",
+              "#567994",
+              "#2a5a5b"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "t": "Longer stay \u2191",
+            "x": 76,
+            "y": 276
+          },
+          {
+            "t": "More nights \u2192",
+            "x": 76,
+            "y": 326
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "font": "Oswald",
+        "fontSize": 11,
+        "color": "#3b2a1d"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": null
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    }
+  ]
+}

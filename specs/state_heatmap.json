@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Heatmap: each state's share of caravan and camping nights, trips and registered RVs, 2024 (calculated).",
+  "data": {
+    "url": "data/state_shares.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "share_pct": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#faf3e6",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "measure",
+          "type": "nominal",
+          "sort": null,
+          "title": null,
+          "axis": {
+            "orient": "top",
+            "labelAngle": 0,
+            "labelFont": "Oswald",
+            "labelFontSize": 13
+          }
+        },
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "sort": null,
+          "title": null
+        },
+        "color": {
+          "field": "share_pct",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              35
+            ],
+            "range": [
+              "#eceaf6",
+              "#3f3f8f"
+            ]
+          },
+          "legend": {
+            "title": "Share (%)",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "measure",
+            "title": "Measure"
+          },
+          {
+            "field": "share_pct",
+            "title": "%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "Oswald",
+        "fontSize": 14,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {
+          "field": "measure",
+          "type": "nominal",
+          "sort": null
+        },
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "sort": null
+        },
+        "text": {
+          "field": "share_pct",
+          "type": "quantitative",
+          "format": ".1f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.share_pct > 22",
+            "value": "#fff6e6"
+          },
+          "value": "#3b2a1d"
+        }
+      }
+    }
+  ],
+  "height": {
+    "step": 40
+  }
+}

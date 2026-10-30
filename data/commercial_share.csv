@@ -1,0 +1,7 @@
+measure,group,share_pct,source_id
+Trips,Commercial parks and camping grounds,67,S1
+Trips,Other sites,33,S1 (remainder of 100)
+Nights,Commercial parks and camping grounds,70,S1
+Nights,Other sites,30,S1 (remainder of 100)
+Spend,Commercial parks and camping grounds,75,S1
+Spend,Other sites,25,S1 (remainder of 100)

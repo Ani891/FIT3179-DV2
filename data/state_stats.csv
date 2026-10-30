@@ -1,0 +1,9 @@
+state,abbr,trips_2024,nights_2024,trips_millions,nights_millions,rv_registered_jan2024,avg_nights,lat,lon,source_id,nights_class,stay_class,bivar_key
+New South Wales,NSW,5054231,18407375,5.054,18.407,223303,3.6,-32.0,147.0,S2,3,2,n3s2
+Victoria,VIC,3936794,11348381,3.937,11.348,211788,2.9,-36.8,144.3,S2,2,1,n2s1
+Queensland,QLD,3208064,13016903,3.208,13.017,242808,4.1,-22.5,144.5,S2,3,3,n3s3
+South Australia,SA,1237992,4369003,1.238,4.369,65368,3.5,-30.0,135.5,S2,1,1,n1s1
+Western Australia,WA,1788277,7019225,1.788,7.019,123390,3.9,-26.0,121.5,S2,2,2,n2s2
+Tasmania,TAS,425756,1626526,0.426,1.627,28535,3.8,-42.0,146.6,S2,1,2,n1s2
+Northern Territory,NT,236094,992449,0.236,0.992,818,4.2,-19.5,133.4,S2,1,3,n1s3
+Australian Capital Territory,ACT,,,,,12503,,-35.5,149.0,S2,,,

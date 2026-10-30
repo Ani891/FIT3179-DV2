@@ -1,0 +1,129 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "100% stacked bar chart: share of caravan and camping trips, nights and spend at commercial parks and camping grounds, 2025.",
+  "height": 210,
+  "data": {
+    "url": "data/commercial_share.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "share_pct": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "stack": "share_pct",
+      "groupby": [
+        "measure"
+      ],
+      "as": [
+        "s0",
+        "s1"
+      ],
+      "offset": "zero"
+    },
+    {
+      "calculate": "(datum.s0 + datum.s1) / 2",
+      "as": "mid"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "height": {
+          "band": 0.6
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "measure",
+          "type": "nominal",
+          "title": null,
+          "sort": null
+        },
+        "x": {
+          "field": "s0",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ]
+          },
+          "axis": {
+            "title": "Share of total (%)",
+            "grid": true,
+            "tickCount": 5
+          }
+        },
+        "x2": {
+          "field": "s1"
+        },
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Commercial parks and camping grounds",
+              "Other sites"
+            ],
+            "range": [
+              "#7b4b7a",
+              "#e3d5bd"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "measure",
+            "title": "Measure"
+          },
+          {
+            "field": "group",
+            "title": "Where"
+          },
+          {
+            "field": "share_pct",
+            "title": "%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "font": "Oswald",
+        "fontSize": 14
+      },
+      "encoding": {
+        "y": {
+          "field": "measure",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "mid",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share_pct"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.group == 'Commercial parks and camping grounds'",
+            "value": "#fff6e6"
+          },
+          "value": "#3b2a1d"
+        }
+      }
+    }
+  ]
+}

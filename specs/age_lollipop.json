@@ -1,0 +1,128 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Lollipop chart: share of trips and nights by age group, year to June 2026.",
+  "height": 220,
+  "data": {
+    "url": "data/age_share.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "share_pct": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#c9b48f",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "label",
+          "type": "nominal",
+          "title": null,
+          "sort": null
+        },
+        "x": {
+          "field": "share_pct",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              50
+            ]
+          },
+          "axis": {
+            "title": "Share of total (%)",
+            "grid": true,
+            "tickCount": 5
+          }
+        },
+        "x2": {
+          "datum": 0
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 220,
+        "opacity": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "label",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "share_pct",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "kind",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Share of trips",
+              "Share of nights"
+            ],
+            "range": [
+              "#b5532a",
+              "#4f6b4a"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "group",
+            "title": "Group"
+          },
+          {
+            "field": "share_pct",
+            "title": "%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "font": "Oswald",
+        "fontSize": 14
+      },
+      "encoding": {
+        "y": {
+          "field": "label",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "share_pct",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share_pct",
+          "type": "quantitative",
+          "format": ".0f"
+        }
+      }
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "datum.group + ': ' + lower(datum.kind)",
+      "as": "label"
+    }
+  ]
+}

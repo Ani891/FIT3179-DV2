@@ -1,0 +1,163 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Butterfly chart: share of caravan and camping trips (left) and nights (right) by travel party, 2024.",
+  "height": 270,
+  "data": {
+    "url": "data/party_share.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "trips_pct": "number",
+        "nights_pct": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "fold": [
+        "trips_pct",
+        "nights_pct"
+      ],
+      "as": [
+        "m",
+        "share"
+      ]
+    },
+    {
+      "calculate": "datum.m == 'trips_pct' ? 'Share of trips' : 'Share of nights'",
+      "as": "label"
+    },
+    {
+      "calculate": "datum.m == 'trips_pct' ? -datum.share : datum.share",
+      "as": "signed"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "height": {
+          "band": 0.6
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "party",
+          "type": "nominal",
+          "sort": null,
+          "title": null,
+          "axis": {
+            "labelLimit": 220,
+            "labelPadding": 6
+          }
+        },
+        "x": {
+          "field": "signed",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              -40,
+              40
+            ]
+          },
+          "axis": {
+            "title": "Trips (left) and nights (right), % of total",
+            "labelExpr": "abs(datum.value)",
+            "grid": true,
+            "tickCount": 8
+          }
+        },
+        "color": {
+          "field": "label",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Share of trips",
+              "Share of nights"
+            ],
+            "range": [
+              "#b5532a",
+              "#4f6b4a"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "party",
+            "title": "Group"
+          },
+          {
+            "field": "label",
+            "title": "Measure"
+          },
+          {
+            "field": "share",
+            "title": "%"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.m == 'trips_pct'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -6,
+        "font": "Oswald",
+        "fontSize": 13
+      },
+      "encoding": {
+        "y": {
+          "field": "party",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "signed",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.m == 'nights_pct'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 6,
+        "font": "Oswald",
+        "fontSize": 13
+      },
+      "encoding": {
+        "y": {
+          "field": "party",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "signed",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share"
+        }
+      }
+    }
+  ]
+}

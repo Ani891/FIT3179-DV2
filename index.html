@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Australia Still Hits the Road</title>
+<meta name="description" content="A data story about caravan and camping travel in Australia: how big it is, who does it, and where.">
+<meta name="author" content="[Anirudh Sridhar]">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fonts: Oswald (headings and chart labels) and Bitter (reading text), loaded from Google Fonts. -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Bitter:wght@400;600&display=swap" rel="stylesheet">
+<!-- The page's own styles. -->
+<link rel="stylesheet" href="css/style.css">
+<!-- The three libraries that draw the charts. They load from a CDN, so the page needs an internet connection. -->
+<script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+</head>
+<body>
+
+<!-- Hero: title, byline and four headline numbers (typed by hand, so update them if the data changes). -->
+<header class="hero">
+  <div class="wrap">
+    <h1>Why Australia Still Hits the Road</h1>
+    <p class="dek">Caravan and camping trips keep growing. Who goes, why, and where do they head?</p>
+    <p class="byline">By <strong>Anirudh Sridhar</strong> (33143633) · FIT3179 Data Visualisation 2 · [Oct 2026]</p>
+  </div>
+  <div class="stats wrap" role="list">
+    <div role="listitem"><b>17.3M</b><span>caravan and camping trips in 2025</span></div>
+    <div role="listitem"><b>60.8M</b><span>nights away in the year to June 2026</span></div>
+    <div role="listitem"><b>87%</b><span>of nights are spent in regional areas</span></div>
+    <div role="listitem"><b>~938,000</b><span>caravans and campervans registered in 2025</span></div>
+  </div>
+</header>
+
+<!-- Chapter menu. Sticks to the top. Each link scrolls to the section with the matching id on this same page. -->
+<nav class="toc" aria-label="Chapters">
+  <ol class="wrap">
+    <li><a href="#ch1">How big</a></li>
+    <li><a href="#ch2">Who and why</a></li>
+    <li><a href="#ch3">Where</a></li>
+    <li><a href="#about">Sources</a></li>
+  </ol>
+</nav>
+
+<main>
+<!-- Introduction: two paragraphs and three key terms. -->
+<section class="intro">
+  <div class="wrap">
+    <p>Australians took 17.3 million caravan and camping trips in 2025, and the number of nights away keeps climbing. The headline hides who goes, why they go and where.</p>
+    <p>This page follows caravan and camping travel across the whole country, from national totals to state and regional patterns, using Tourism Research Australia figures. It asks one question: why does road travel remain such a popular way to see Australia?</p>
+    <div class="terms">
+      <div><b>Trip</b>One journey away from home that includes at least one night.</div>
+      <div><b>Night</b>One night spent away from home during a trip.</div>
+      <div><b>Year to June 2026</b>A 12-month period ending in June 2026. It overlaps with calendar 2025, so the two are not separate years.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 1, How big: a waffle chart and a 100% stacked bar chart.
+     Every chart follows the same pattern. A <figure class="card"> holds a heading, a short how-to-read line, an empty <div id="vis-...">, a longer 'What it shows' paragraph and a source caption.
+     js/main.js finds each <div> by its id and draws the chart from the matching file in specs/ (its numbers sit in data/).
+     The aria-label on the <div> describes the chart for screen readers. -->
+<section class="chapter" id="ch1">
+<div class="wrap">
+<header class="ch-head"><h2>How big is the habit?</h2><p>Start with the national picture. Caravan and camping travel is large, it is mostly a regional business, and most of the money goes to commercial parks.</p></header>
+<div class="grid-2">
+<figure class="card">
+  <h3>87 in every 100 nights are spent in regional Australia</h3>
+  <p class="sub">Each square stands for 1 in every 100 caravan and camping nights in 2025. Teal squares are nights spent in regional Australia and sand squares are nights spent elsewhere.</p>
+  <div id="vis-regional" class="chart fixed" role="img" aria-label="Waffle chart: 87 of 100 squares are caravan and camping nights spent in regional Australia."></div>
+  <p class="read"><strong>What it shows.</strong> Australians took 17.3 million caravan and camping trips in 2025 and spent 57.9 million nights away. Almost nine in ten of those nights were in regional areas, and so was 83% of the money spent while travelling ($8.6 billion of $10.3 billion). In the year to June 2026 the total grew to 60.8 million nights. This is mainly a regional story.</p>
+  <figcaption>Source: Tourism Research Australia, Caravan and camping data, year ending December 2025 (S1). The 60.8 million figure is from the Caravan Industry Association of Australia, Industry Statistics (S4).</figcaption>
+</figure>
+<figure class="card">
+  <h3>Commercial parks take 75% of the spend, more than their 67% share of trips</h3>
+  <p class="sub">Each bar is 100% of caravan and camping trips, nights or spend in 2025. Plum is commercial caravan parks and camping grounds and sand is every other place to stay. The sand share is what is left after the plum.</p>
+  <div id="vis-commercial" class="chart" role="img" aria-label="100% stacked bar chart: commercial parks take 67 percent of trips, 70 percent of nights and 75 percent of spend."></div>
+  <p class="read"><strong>What it shows.</strong> Commercial parks and camping grounds host two in three trips and 70% of nights, but they collect three-quarters of the spend. Because their share of spend is bigger than their share of trips, an average trip to a commercial site brings in more money than an average trip elsewhere.</p>
+  <figcaption>Source: Tourism Research Australia, Caravan and camping data, year ending December 2025 (S1). TRA reports similar holiday-only shares: 68% of trips, 71% of nights and 77% of spend.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<!-- Chapter 2, Who: a lollipop chart, a butterfly chart, a waffle chart (two grids) and a connected dot plot. No two neighbouring charts use the same idiom. -->
+<section class="chapter alt" id="ch2">
+<div class="wrap">
+<header class="ch-head"><h2>Who goes and for how long</h2><p>The stereotype is a retiree on a long trip. The numbers show a mix of couples, families, short breaks and long journeys, and mostly holidays.</p></header>
+<div class="grid-2">
+<figure class="card">
+  <h3>Over-55s take 34% of trips but 42% of nights</h3>
+  <p class="sub">Each row is one age group. The rust dot is its share of all caravan and camping trips and the green dot is its share of all nights. A green dot further right than the rust dot means longer stays.</p>
+  <div id="vis-age" class="chart" role="img" aria-label="Lollipop chart: ages 30 to 54 took 42 percent of trips; ages 55 and over took 34 percent of trips and 42 percent of nights."></div>
+  <p class="read"><strong>What it shows.</strong> Travellers aged 30 to 54 take the largest share of trips (42%). Those aged 55 and over take 34% of trips but 42% of all nights, so they stay longer on average. The retiree stereotype is partly true, but younger travellers still make up the biggest share of trips.</p>
+  <figcaption>Source: Caravan Industry Association of Australia, Industry Statistics (S4), from Tourism Research Australia data. Year to June 2026.</figcaption>
+</figure>
+<figure class="card">
+  <h3>Couples take a third of all nights</h3>
+  <p class="sub">Trips (rust) run to the left of the centre line and nights (green) to the right. A longer bar on the right than on the left means that group stays longer than its number of trips suggests. Data is for 2024.</p>
+  <div id="vis-party" class="chart" role="img" aria-label="Butterfly chart: adult couples take 26 percent of trips and 33 percent of nights; families with children 31 and 29; travelling alone 17 and 14."></div>
+  <p class="read"><strong>What it shows.</strong> Adult couples make up 26% of trips but 33% of nights, the biggest jump of any group. Families and friends with children are the largest group by trips (31%) but take 29% of nights, so their stays are shorter. People travelling alone take 17% of trips and 14% of nights.</p>
+  <figcaption>Source: Caravan Industry Association of Australia, State of Industry 2025, from the Tourism Research Australia National Visitor Survey (S2). 2024 figures; an earlier survey, not comparable with 2025 and 2026 figures.</figcaption>
+</figure>
+</div>
+<div class="grid-2">
+<figure class="card">
+  <h3>Trips of 15 nights or more are 4% of trips but 18% of nights</h3>
+  <p class="sub">Each grid has 100 squares. The left grid stands for 100 caravan and camping trips and the right grid for 100 nights. Squares are coloured by trip length, light blue for short and dark blue for long, so you can see how much of each grid the longest trips fill. One square in the trips grid is sand because the published shares add to 99.</p>
+  <div id="vis-length" class="chart" role="img" aria-label="Waffle chart: 2 to 3 night trips are 45 of 100 trips and 28 of 100 nights; trips of 15 nights or more are 4 of 100 trips and 18 of 100 nights."></div>
+  <p class="read"><strong>What it shows.</strong> Short breaks of 2 to 3 nights are the biggest block of trips (45 squares) but only 28 squares of nights. Trips of 15 nights or more are just 4 squares of trips yet 18 squares of nights, and trips of 8 to 14 nights grow from 8 squares to 19. Road travel is a mix of weekend breaks and long journeys, and the long ones fill the calendar.</p>
+  <figcaption>Source: Caravan Industry Association of Australia, State of Industry 2025, from the Tourism Research Australia National Visitor Survey (S2). 2024 figures; an earlier survey, not comparable with 2025 and 2026 figures.</figcaption>
+</figure>
+<figure class="card">
+  <h3>77% of caravan and camping trips are holidays, against 45% of all domestic trips</h3>
+  <p class="sub">Each line joins the share of caravan and camping trips (lime) to the share of all domestic overnight trips (charcoal) for one reason for travelling, year ending December 2025.</p>
+  <div id="vis-reason" class="chart" role="img" aria-label="Connected dot plot: holiday is 77 percent of caravan and camping trips and 44.6 percent of all domestic trips; visiting friends and relatives 13 and 38.4; business 5 and 10.8."></div>
+  <p class="read"><strong>What it shows.</strong> Holidays make up 77% of caravan and camping trips against 44.6% of all domestic overnight trips. Visiting friends and relatives (13% against 38.4%) and business travel (5% against 10.8%) matter much less. Caravan and camping is mostly leisure travel.</p>
+  <figcaption>Sources: Tourism Research Australia, Caravan and camping data (S1) and Domestic Tourism Statistics data tables, Table 3c (S5). A trip can have more than one reason in the all-trips figures, so those shares can add to more than 100.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<!-- Chapter 3, Where: a choropleth, a lollipop chart, a heatmap, a proportional symbol map and a bivariate map, in an order that keeps the same idiom apart.
+     The choropleth and symbol map need data/states.json (boundaries). The others only need the CSV files in data. -->
+<section class="chapter" id="ch3">
+<div class="wrap">
+<header class="ch-head"><h2>Where Australians go</h2><p>Every state has its own pattern. These charts and maps use 2024 figures, the latest with a full set of states and regions.</p></header>
+<div class="grid-2">
+<figure class="card">
+  <h3>Pick a measure and the map shows which states lead</h3>
+  <p class="sub"><strong>Interactive.</strong> Use the drop-down under the map to switch between nights hosted, trips taken and average nights per trip in 2024. Each state is shaded raspberry, darker meaning a higher figure for the chosen measure, and labelled with its state code. Hover over a state for its exact value. The ACT has no figure in the source and is not shaded.</p>
+  <div id="vis-choropleth" class="chart" role="img" aria-label="Interactive map of Australia with a drop-down to switch between nights hosted, trips taken and average nights per trip by state, 2024. New South Wales leads on nights and trips; the Northern Territory has the longest average stay."></div>
+  <p class="read"><strong>What it shows.</strong> Nights and trips tell a similar story. New South Wales leads on both (18.4 million nights and 5.1 million trips), followed by Queensland on nights (13.0 million) and Victoria on trips (3.9 million). Switch to average nights per trip and the picture flips: the Northern Territory (4.2) and Queensland (4.1) have the longest stays, while Victoria (2.9) has the shortest. The states with the most visitors are not always the ones where visitors stay longest.</p>
+  <figcaption>Source: Caravan Industry Association of Australia, State of Industry 2025, from the Tourism Research Australia National Visitor Survey (S2). 2024 figures; an earlier survey, not comparable with 2025 and 2026 figures. Average stay is nights divided by trips. Boundaries: Natural Earth (S3).</figcaption>
+</figure>
+<figure class="card">
+  <h3>Seven of the ten busiest regions are in NSW or Queensland</h3>
+  <p class="sub">Each row is a tourism region, with its state in brackets. The length of the stick and the position of the teal dot show its caravan and camping trips in 2024.</p>
+  <div id="vis-regions" class="chart" role="img" aria-label="Lollipop chart of the ten busiest regions, state in brackets. North Coast (NSW) is first with 1,311 thousand trips."></div>
+  <p class="read"><strong>What it shows.</strong> The North Coast of NSW has the most caravan and camping trips of any region (about 1.3 million), then the NSW South Coast (about 1.0 million) and Australia's South West in Western Australia (about 0.8 million). NSW has four of the ten busiest regions, Queensland three, Victoria two and Western Australia one.</p>
+  <figcaption>Source: Caravan Industry Association of Australia, State of Industry 2025, from the Tourism Research Australia National Visitor Survey (S2). 2024 figures; an earlier survey, not comparable with 2025 and 2026 figures.</figcaption>
+</figure>
+</div>
+<figure class="card full">
+  <h3>New South Wales hosts 32% of nights but owns 25% of the vans</h3>
+  <p class="sub">Each row is a state and each column is a measure. Each cell shows the state's share of that measure as a percentage of the seven states shown, and darker indigo means a bigger share. The ACT is left out because the source has no trips or nights for it.</p>
+  <div id="vis-heatmap" class="chart" role="img" aria-label="Heatmap of seven states by share of nights, trips, registered RVs and all domestic nights. New South Wales: 32.4 percent of nights, 31.8 of trips, 24.9 of RVs."></div>
+  <p class="read"><strong>What it shows.</strong> NSW hosts a bigger share of caravan nights (32%) than its share of registered vans (25%). Queensland owns 27% of vans but hosts 23% of nights, and Victoria owns 24% of vans and hosts 20% of nights. Western Australia, South Australia and the Northern Territory host a bigger share of caravan nights (12.4%, 7.7%, 1.7%) than of all domestic overnight nights (9.5%, 6.8%, 1.1%), though the last column is from a different year and survey.</p>
+  <figcaption>Calculated from S2 and S5 (shares are my own arithmetic on the published figures). Nights and trips count where the trip happened; vans count where the vehicle is registered. The last column is all domestic overnight nights in the year to June 2026, a benchmark to compare loosely.</figcaption>
+</figure>
+<div class="grid-2">
+<figure class="card">
+  <h3>Queensland has the most registered caravans and RVs</h3>
+  <p class="sub">Each ochre bubble is a state, labelled with its state code. Bigger bubbles mean more registered recreational vehicles in January 2024. Bubbles sit at an approximate point in each state, so compare their size and not their position.</p>
+  <div id="vis-symbols" class="chart" role="img" aria-label="Map of Australia with bubbles sized by registered recreational vehicles. Queensland 242,808, New South Wales 223,303, Victoria 211,788."></div>
+  <p class="read"><strong>What it shows.</strong> Queensland has the most registered caravans and recreational vehicles (242,808), followed by New South Wales (223,303) and Victoria (211,788). Western Australia has 123,390 and South Australia 65,368.</p>
+  <figcaption>Source: Caravan Industry Association of Australia, State of Industry 2025, from the Tourism Research Australia National Visitor Survey (S2). 2024 figures; an earlier survey, not comparable with 2025 and 2026 figures. Boundaries: Natural Earth (S3).</figcaption>
+</figure>
+<figure class="card">
+  <h3>Queensland has many nights and long stays; Victoria has many nights but short stays</h3>
+  <p class="sub">Each state is coloured by two things at once. Green shows how many caravan and camping nights it hosts (under 5 million, 5 to 12 million, over 12 million) and blue shows how long the average stay is (under 3.6 nights, 3.6 to 3.9, 4.0 or more). The key in the bottom-left corner shows the nine colours: moving right means more nights and moving up means longer stays.</p>
+  <div id="vis-bivariate" class="chart" role="img" aria-label="Bivariate map of Australia: Queensland high nights and long stays, New South Wales high nights and medium stays, Victoria medium nights and short stays, Northern Territory few nights and long stays."></div>
+  <p class="read"><strong>What it shows.</strong> Queensland has the darkest colour: over 12 million nights and long stays of 4.1 nights per trip. New South Wales hosts the most nights (18.4 million) but its average stay is 3.6 nights. Victoria has 11.3 million nights yet the shortest stays (2.9). The Northern Territory has the longest stays (4.2) but only 1.0 million nights.</p>
+  <figcaption>Calculated from state trips and nights in S2 (nights divided by trips). The ACT has no figure in the source and is not shaded. Boundaries: Natural Earth (S3).</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<!-- Closing section: three takeaways. The numbers here are typed by hand, so update them if the data changes. -->
+<section class="ending">
+  <div class="wrap">
+    <h2>The road is still calling.</h2>
+    <div class="takeaways">
+      <div><b>The habit is growing</b>Nights away rose from 57.9 million in 2025 to 60.8 million in the year to June 2026.</div>
+      <div><b>It is a regional story</b>87% of caravan and camping nights in 2025 were spent in regional Australia.</div>
+      <div><b>Short breaks and long journeys</b>In 2024, 45% of trips were 2 to 3 nights, yet trips of 15 nights or more made up 18% of all nights.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Sources: the S1, S2 ids match the source_id column in the data/*.csv files. -->
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>Sources</h2>
+    <p>Every figure on this page comes from one of these sources. Shares are rounded as published.</p>
+    <ul class="sources">
+      <li><b>S1</b><span>Tourism Research Australia, <a href="https://www.tra.gov.au/en/tourism-statistics/caravan-and-camping-data">Caravan and camping data</a>, year ending December 2025. <span class="used">Used for: 2025 trips, nights and spend; regional share of nights; trip purpose; registrations.</span></span></li>
+      <li><b>S2</b><span>Caravan Industry Association of Australia, <a href="https://www.rmscloud.com/hubfs/APAC%20Field%20Marketing%20FY26/Caravan%20and%20Camping%20State%20of%20Industry%202025.pdf">Caravan and Camping State of Industry 2025 (PDF)</a>, 10th edition, 2024 figures from the Tourism Research Australia National Visitor Survey. <span class="used">Used for: 2024 state trips, nights and registrations; top regions; travel party; trip length.</span></span></li>
+      <li><b>S3</b><span>Natural Earth, <a href="https://www.naturalearthdata.com/">States, Provinces</a>, 1:50m, public domain. Reduced to Australia's states and simplified in mapshaper. <span class="used">Used for: state maps.</span></span></li>
+      <li><b>S4</b><span>Caravan Industry Association of Australia, <a href="https://www.caravanindustry.com.au/insights-campaigns/industry-statistics/">Industry Statistics</a> (updated 13 Oct 2026), from Tourism Research Australia data. <span class="used">Used for: year to June 2026 trips, nights and spend; age groups.</span></span></li>
+      <li><b>S5</b><span>Tourism Research Australia, <a href="https://www.tra.gov.au/en/tourism-statistics/domestic-tourism-statistics-results">Domestic Tourism Statistics results, June quarter 2026</a>, data tables (XLSX), Tables 1c and 3c. <span class="used">Used for: all domestic overnight travel by reason of visit (year ending December 2025) and by state (year ending June 2026).</span></span></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<!-- Disclaimer: the small print at the very bottom of the page. -->
+<footer class="disclaimer">
+  <div class="wrap">
+    <h2>Disclaimer</h2>
+    <p>All figures are as published by the sources above. I have not measured or checked them myself. Tourism Research Australia replaced its National Visitor Survey with new Domestic Tourism Statistics in 2025, so figures for 2024 (S2) and for 2025 and 2026 (S1, S4 and S5) are shown separately and are not compared. Shares may not add to 100 because of rounding.</p>
+    <h2>About</h2>
+    <p>By Anirudh Sridhar - (33143633) - FIT3179 Data Visualisation 2 - [Oct 2026]</p>
+    <h2>Acknowledgment</h2>
+    <p>[I used Claude (https://claude.ai/new) to help with grammar, data wrangling and coding some idioms over 6 iterations, with the outputs being modified by me through editing the colours, layout and text.]</p>
+  </div>
+</footer>
+
+<!-- main.js goes last, so the chart divs above already exist when it runs. -->
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Connected dot plot: reasons for travel, caravan and camping trips vs all domestic overnight trips, year ending December 2025.",
+  "height": 220,
+  "data": {
+    "url": "data/reason_compare.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "caravan_pct": "number",
+        "all_pct": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#c9b48f",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "reason",
+          "type": "nominal",
+          "title": null,
+          "sort": null
+        },
+        "x": {
+          "field": "caravan_pct",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ]
+          },
+          "axis": {
+            "title": "Share of trips (%)",
+            "grid": true,
+            "tickCount": 5
+          }
+        },
+        "x2": {
+          "field": "all_pct"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "fold": [
+            "caravan_pct",
+            "all_pct"
+          ],
+          "as": [
+            "m",
+            "share"
+          ]
+        },
+        {
+          "calculate": "datum.m == 'caravan_pct' ? 'Caravan and camping trips' : 'All domestic overnight trips'",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 170,
+        "opacity": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "reason",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "share",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "label",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Caravan and camping trips",
+              "All domestic overnight trips"
+            ],
+            "range": [
+              "#8fa31e",
+              "#3d3d3d"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "reason",
+            "title": "Reason"
+          },
+          {
+            "field": "label",
+            "title": "Group"
+          },
+          {
+            "field": "share",
+            "title": "%"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Interactive choropleth: a drop-down switches the shading between nights hosted, trips taken and average nights per trip by state, 2024. State codes are labelled on each state.",
+  "height": 340,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -134,
+      0,
+      0
+    ]
+  },
+  "params": [
+    {
+      "name": "measure",
+      "value": "nights_millions",
+      "bind": {
+        "input": "select",
+        "options": [
+          "nights_millions",
+          "trips_millions",
+          "avg_nights"
+        ],
+        "labels": [
+          "Nights hosted (millions)",
+          "Trips taken (millions)",
+          "Average nights per trip"
+        ],
+        "name": "Show: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "data/states.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "data/state_stats.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "nights_millions": "number",
+                  "trips_millions": "number",
+                  "avg_nights": "number",
+                  "lat": "number",
+                  "lon": "number"
+                }
+              }
+            },
+            "key": "state",
+            "fields": [
+              "nights_millions",
+              "trips_millions",
+              "avg_nights"
+            ]
+          }
+        },
+        {
+          "calculate": "datum[measure]",
+          "as": "value"
+        },
+        {
+          "calculate": "measure == 'nights_millions' ? 'Nights hosted (millions)' : (measure == 'trips_millions' ? 'Trips taken (millions)' : 'Average nights per trip')",
+          "as": "what"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#faf3e6"
+      },
+      "encoding": {
+        "color": {
+          "field": "value",
+          "type": "quantitative",
+          "scale": {
+            "range": [
+              "#f7e3ec",
+              "#8c1f55"
+            ]
+          },
+          "legend": {
+            "title": "Darker = higher",
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.name",
+            "title": "State"
+          },
+          {
+            "field": "what",
+            "title": "Measure"
+          },
+          {
+            "field": "value",
+            "title": "Value",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_stats.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "nights_millions": "number",
+            "trips_millions": "number",
+            "avg_nights": "number",
+            "lat": "number",
+            "lon": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.abbr != 'ACT'"
+        },
+        {
+          "calculate": "datum[measure]",
+          "as": "value"
+        },
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "value",
+              "as": "vmax"
+            },
+            {
+              "op": "min",
+              "field": "value",
+              "as": "vmin"
+            }
+          ]
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "font": "Oswald",
+        "fontSize": 13
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "abbr"
+        },
+        "color": {
+          "condition": {
+            "test": "(datum.value - datum.vmin) / (datum.vmax - datum.vmin) > 0.5",
+            "value": "#fff6e6"
+          },
+          "value": "#3b2a1d"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Lollipop chart: ten busiest tourism regions by caravan and camping trips, 2024. State is shown in brackets after each region.",
+  "height": 340,
+  "data": {
+    "url": "data/regions_top10.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "trips_thousands": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#c9b48f",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "title": null,
+          "sort": null
+        },
+        "x": {
+          "field": "trips_thousands",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              1500
+            ]
+          },
+          "axis": {
+            "title": "Overnight trips (thousands), 2024",
+            "grid": true,
+            "tickCount": 5
+          }
+        },
+        "x2": {
+          "datum": 0
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 220,
+        "opacity": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "trips_thousands",
+          "type": "quantitative"
+        },
+        "color": {
+          "datum": "Caravan and camping trips by region",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Caravan and camping trips by region"
+            ],
+            "range": [
+              "#1f8a8a"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "title": null,
+            "labelLimit": 400,
+            "titleLimit": 400
+          }
+        },
+        "tooltip": [
+          {
+            "field": "region",
+            "title": "Group"
+          },
+          {
+            "field": "trips_thousands",
+            "title": "Value"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "font": "Oswald",
+        "fontSize": 14
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "sort": null
+        },
+        "x": {
+          "field": "trips_thousands",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "trips_thousands",
+          "type": "quantitative",
+          "format": ",.0f"
+        }
+      }
+    }
+  ]
+}
